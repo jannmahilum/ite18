@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editable Grading Table</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css"> <!-- Link to the external CSS -->
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <!-- Back Button -->
+      <button class="back-btn" onclick="window.history.back();">
+        <i class="fas fa-arrow-left"></i>
+      </button>
+
+      <!-- Logo -->
+      <div class="logo-container2">
+        <img src="logo/1.png" alt="NSTP Logo" class="logo">
+      </div>
+
+      <!-- Heading Section -->
+      <div class="section-heading">
+        <p id="section-name">Section 1</p>
+        <h2 class="highlight">Student Record</h2>
+      </div>
+
+      <!-- Search Bar -->
+      <div class="search-container">
+        <input type="text" id="search-bar" placeholder="Search Student ID">
+        <button id="reset-btn">All</button>
+      </div>
+
+      <!-- Editable Table -->
+      <div class="records-container">
+        <table class="records-table">
+          <thead>
+            <tr>
+              <th>Student ID</th>
+              <th>Attendance</th>
+              <th>Activity</th>
+              <th>Performance</th>
+              <th>GPA</th>
+              <th>Percentage</th>
+              <th>Status (Pass/Fail)</th>
+            </tr>
+          </thead>
+          <tbody id="records-body">
+            <!-- Rows will be dynamically added by JavaScript -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Footer -->
+      <div class="footer4">NSTP SERVICE RECORDS</div>
+    </div>
+  </div>
+
+  <script>
+    // Function to get the query parameter value
+    function getQueryParam(name) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name);
+    }
+
+    // Retrieve the section name from the query parameter
+    const sectionName = getQueryParam('section') || 'Section 1';
+
+    // Update the section name in the heading
+    document.getElementById('section-name').textContent = sectionName;
+
+    // Generate table rows dynamically
+    function generateTable(rows) {
+      const tbody = document.getElementById('records-body');
+      tbody.innerHTML = ''; // Clear any existing rows
+
+      for (let i = 0; i < rows; i++) {
+        const row = document.createElement('tr');
+        for (let j = 0; j < 7; j++) {
+          const cell = document.createElement('td');
+          if (j === 0) {
+            // Make Student ID editable but leave it blank
+            cell.contentEditable = true;
+          } else if (j < 4) {
+            cell.contentEditable = true; // Allow editing for grades
+          } else if (j === 4) {
+            cell.className = 'average';
+            cell.textContent = '5.00'; // Default average
+          } else if (j === 5) {
+            cell.className = 'percentage';
+            cell.textContent = '0%'; // Default percentage
+          } else if (j === 6) {
+            cell.className = 'status';
+            cell.textContent = 'Failed'; // Default status
+          }
+          row.appendChild(cell);
+        }
+        tbody.appendChild(row);
+      }
+    }
+
+    // Update grades dynamically
+    function updateGrades(cell) {
+      const row = cell.parentElement;
+      const cells = row.children;
+
+      const attendance = parseFloat(cells[1].textContent) || 5; // Default to 5 if empty
+      const activity = parseFloat(cells[2].textContent) || 5;
+      const performance = parseFloat(cells[3].textContent) || 5;
+
+      const average = ((attendance + activity + performance) / 3).toFixed(2);
+      const percentage = ((100 - (average - 1) * 20)).toFixed(0); // Map grades to percentage
+      const status = average <= 3 ? 'Passed' : 'Failed';
+
+      // Update Average
+      cells[4].textContent = average;
+
+      // Update Percentage
+      cells[5].textContent = `${percentage}%`;
+
+      // Update Status
+      const statusCell = cells[6];
+      statusCell.textContent = status;
+      statusCell.style.color = status === 'Passed' ? 'green' : 'red';
+    }
+
+    // Add event listener for editable cells
+    document.addEventListener('input', function (e) {
+      if (e.target.tagName === 'TD' && e.target.contentEditable === 'true') {
+        if (e.target.cellIndex !== 0) updateGrades(e.target); // Only update grades for non-ID columns
+      }
+    });
+
+    // Search functionality
+    document.getElementById('search-bar').addEventListener('input', function () {
+      const searchValue = this.value.toLowerCase();
+      const rows = document.querySelectorAll('#records-body tr');
+
+      rows.forEach(row => {
+        const studentID = row.cells[0].textContent.toLowerCase();
+        row.style.display = studentID.includes(searchValue) ? '' : 'none';
+      });
+    });
+
+    // Reset filter
+    document.getElementById('reset-btn').addEventListener('click', function () {
+      document.getElementById('search-bar').value = '';
+      const rows = document.querySelectorAll('#records-body tr');
+      rows.forEach(row => (row.style.display = ''));
+    });
+
+    // Initialize table with 40 rows
+    generateTable(40);
+  </script>
+</body>
+</html>

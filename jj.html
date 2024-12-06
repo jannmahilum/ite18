@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Grades Table</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            margin-top: 100px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: auto;
+            font-size: 12px; /* Reduce font size */
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 5px; /* Reduce padding */
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        th, td {
+            word-wrap: break-word; /* Allow content to wrap in cells */
+            max-width: 100px; /* Set max width for each cell */
+            overflow: hidden;
+        }
+        th:nth-child(2), td:nth-child(2) {
+            width: auto;
+        }
+        .header {
+            font-weight: bold;
+            text-align: center;
+        }
+        .empty-cell {
+            background-color: #f9f9f9;
+        }
+        .table-container {
+            width: 100%;
+            overflow-x: auto; /* Allow horizontal scrolling if needed */
+        }
+    </style>
+</head>
+<body>
+
+<h2>Student Grading Table</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th colspan="10" class="header">First Semester</th>
+            <th colspan="15" class="header">Course & Year: </th>
+            <th colspan="17" class="header">Instructor:</th>
+            <th colspan="7" class="header">School Year:</th>
+        </tr>
+        <tr>
+            <th rowspan="4" class="header">Student ID</th>
+            <th rowspan="4" class="header">Names</th>
+            <th colspan="14" class="header">ATTENDANCE (10%)</th>
+            <th colspan="13" class="header">WRITTEN WORK (20%)</th>
+            <th colspan="13" class="header">PERFORMANCE TASKS (40%)</th>
+            <th colspan="5" class="header">EXAMINATION (30%)</th>
+            <th rowspan="3" class="header">SEMESTER GRADE</th>
+            <th rowspan="3" class="header">STATUS (Pass/Fail)</th>
+        </tr>
+        <tr>
+            <th>#</th>
+            <th>1</th>
+            <th>2</th>
+            <th>3</th>
+            <th>4</th>
+            <th>5</th>
+            <th>6</th>
+            <th>7</th>
+            <th>8</th>
+            <th>9</th>
+            <th>10</th>
+            <th>Total</th>
+            <th>PS (100%)</th>
+            <th>WS (10%)</th>
+
+            <th>1</th>
+            <th>2</th>
+            <th>3</th>
+            <th>4</th>
+            <th>5</th>
+            <th>6</th>
+            <th>7</th>
+            <th>8</th>
+            <th>9</th>
+            <th>10</th>
+            <th>Total</th>
+            <th>PS (100%)</th>
+            <th>WS (20%)</th>
+
+            <th>1</th>
+            <th>2</th>
+            <th>3</th>
+            <th>4</th>
+            <th>5</th>
+            <th>6</th>
+            <th>7</th>
+            <th>8</th>
+            <th>9</th>
+            <th>10</th>
+            <th>Total</th>
+            <th>PS (100%)</th>
+            <th>WS (40%)</th>
+
+            <th>Midterm</th>
+            <th>Final</th>
+            <th>Total</th>
+            <th>PS (100%)</th>
+            <th>WS (30%)</th>
+        </tr>
+        <tr>
+            <!-- attendance-->
+            <th>Highest Score</th>
+            <th class="empty-cell" id="attHighest1" contenteditable="true" oninput="updateScores('att')"></th>
+            <th class="empty-cell" id="attHighest2" contenteditable="true" oninput="updateScores('att')"></th>
+            <th class="empty-cell" id="attHighest3" contenteditable="true" oninput="updateScores('att')"></th>
+            <th class="empty-cell" id="attHighest4" contenteditable="true" oninput="updateScores('att')"></th>
+            <th class="empty-cell" id="attHighest5" contenteditable="true" oninput="updateScores('att')"></th>
+            <th class="empty-cell" id="attHighest6" contenteditable="true" oninput="updateScores('att')"></th>
+            <th class="empty-cell" id="attHighest7" contenteditable="true" oninput="updateScores('att')"></th>
+            <th class="empty-cell" id="attHighest8" contenteditable="true" oninput="updateScores('att')"></th>
+            <th class="empty-cell" id="attHighest9" contenteditable="true" oninput="updateScores('att')"></th>
+            <th class="empty-cell" id="attHighest10" contenteditable="true" oninput="updateScores('att')"></th>
+            <th class="empty-cell" id="attTotal"></th>
+            <th class="empty-cell" id="attPS"></th>
+            <th class="empty-cell" id="attWS"></th>
+
+            <!-- written work-->
+            <th class="empty-cell" id="wwHighest1" contenteditable="true" oninput="updateScores('ww')"></th>
+            <th class="empty-cell" id="wwHighest2" contenteditable="true" oninput="updateScores('ww')"></th>
+            <th class="empty-cell" id="wwHighest3" contenteditable="true" oninput="updateScores('ww')"></th>
+            <th class="empty-cell" id="wwHighest4" contenteditable="true" oninput="updateScores('ww')"></th>
+            <th class="empty-cell" id="wwHighest5" contenteditable="true" oninput="updateScores('ww')"></th>
+            <th class="empty-cell" id="wwHighest6" contenteditable="true" oninput="updateScores('ww')"></th>
+            <th class="empty-cell" id="wwHighest7" contenteditable="true" oninput="updateScores('ww')"></th>
+            <th class="empty-cell" id="wwHighest8" contenteditable="true" oninput="updateScores('ww')"></th>
+            <th class="empty-cell" id="wwHighest9" contenteditable="true" oninput="updateScores('ww')"></th>
+            <th class="empty-cell" id="wwHighest10" contenteditable="true" oninput="updateScores('ww')"></th>
+            <th class="empty-cell" id="wwTotal"></th>
+            <th class="empty-cell" id="wwPS"></th>
+            <th class="empty-cell" id="wwWS"></th>
+
+            <!-- performance tasks-->
+            <th class="empty-cell" id="ptHighest1" contenteditable="true" oninput="updateScores('pt')"></th>
+            <th class="empty-cell" id="ptHighest2" contenteditable="true" oninput="updateScores('pt')"></th>
+            <th class="empty-cell" id="ptHighest3" contenteditable="true" oninput="updateScores('pt')"></th>
+            <th class="empty-cell" id="ptHighest4" contenteditable="true" oninput="updateScores('pt')"></th>
+            <th class="empty-cell" id="ptHighest5" contenteditable="true" oninput="updateScores('pt')"></th>
+            <th class="empty-cell" id="ptHighest6" contenteditable="true" oninput="updateScores('pt')"></th>
+            <th class="empty-cell" id="ptHighest7" contenteditable="true" oninput="updateScores('pt')"></th>
+            <th class="empty-cell" id="ptHighest8" contenteditable="true" oninput="updateScores('pt')"></th>
+            <th class="empty-cell" id="ptHighest9" contenteditable="true" oninput="updateScores('pt')"></th>
+            <th class="empty-cell" id="ptHighest10" contenteditable="true" oninput="updateScores('pt')"></th>
+            <th class="empty-cell" id="ptTotal"></th>
+            <th class="empty-cell" id="ptPS"></th>
+            <th class="empty-cell" id="ptWS"></th>
+
+            <!-- examination-->
+            <th class="empty-cell" id="exHighest1" contenteditable="true" oninput="updateScores('ex')"></th>
+            <th class="empty-cell" id="exHighest2" contenteditable="true" oninput="updateScores('ex')"></th>
+            <th class="empty-cell" id="exTotal"></th>
+            <th class="empty-cell" id="exPS"></th>
+            <th class="empty-cell" id="exWS"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr id="row_12345">
+            <td  contenteditable="true" id="studentID1"></td>
+            <td colspan="2" contenteditable="true" id="studentName1"></td>
+            <!-- Attendance columns -->
+            <td id="row_12345_att1" contenteditable="true" oninput="checkMaxScore('att', 'row_12345', 1)"></td>
+            <td id="row_12345_att2" contenteditable="true" oninput="checkMaxScore('att', 'row_12345', 2)"></td>
+            <td id="row_12345_att3" contenteditable="true" oninput="checkMaxScore('att', 'row_12345', 3)"></td>
+            <td id="row_12345_att4" contenteditable="true" oninput="checkMaxScore('att', 'row_12345', 4)"></td>
+            <td id="row_12345_att5" contenteditable="true" oninput="checkMaxScore('att', 'row_12345', 5)"></td>
+            <td id="row_12345_att6" contenteditable="true" oninput="checkMaxScore('att', 'row_12345', 6)"></td>
+            <td id="row_12345_att7" contenteditable="true" oninput="checkMaxScore('att', 'row_12345', 7)"></td>
+            <td id="row_12345_att8" contenteditable="true" oninput="checkMaxScore('att', 'row_12345', 8)"></td>
+            <td id="row_12345_att9" contenteditable="true" oninput="checkMaxScore('att', 'row_12345', 9)"></td>
+            <td id="row_12345_att10" contenteditable="true" oninput="checkMaxScore('att', 'row_12345', 10)"></td>
+            <td id="row_12345_attTotal"></td>
+            <td id="row_12345_attPS"></td>
+            <td id="row_12345_attWS"></td>
+
+            <!-- Written Work -->
+            <td id="row_12345_ww1" contenteditable="true" oninput="checkMaxScore('ww', 'row_12345', 1)"></td>
+            <td id="row_12345_ww2" contenteditable="true" oninput="checkMaxScore('ww', 'row_12345', 2)"></td>
+            <td id="row_12345_ww3" contenteditable="true" oninput="checkMaxScore('ww', 'row_12345', 3)"></td>
+            <td id="row_12345_ww4" contenteditable="true" oninput="checkMaxScore('ww', 'row_12345', 4)"></td>
+            <td id="row_12345_ww5" contenteditable="true" oninput="checkMaxScore('ww', 'row_12345', 5)"></td>
+            <td id="row_12345_ww6" contenteditable="true" oninput="checkMaxScore('ww', 'row_12345', 6)"></td>
+            <td id="row_12345_ww7" contenteditable="true" oninput="checkMaxScore('ww', 'row_12345', 7)"></td>
+            <td id="row_12345_ww8" contenteditable="true" oninput="checkMaxScore('ww', 'row_12345', 8)"></td>
+            <td id="row_12345_ww9" contenteditable="true" oninput="checkMaxScore('ww', 'row_12345', 9)"></td>
+            <td id="row_12345_ww10" contenteditable="true" oninput="checkMaxScore('ww', 'row_12345', 10)"></td>
+            <td id="row_12345_wwTotal"></td>
+            <td id="row_12345_wwPS"></td>
+            <td id="row_12345_wwWS"></td>
+
+            <!-- Performance Tasks -->
+            <td id="row_12345_pt1" contenteditable="true" oninput="checkMaxScore('pt', 'row_12345', 1)"></td>
+            <td id="row_12345_pt2" contenteditable="true" oninput="checkMaxScore('pt', 'row_12345', 2)"></td>
+            <td id="row_12345_pt3" contenteditable="true" oninput="checkMaxScore('pt', 'row_12345', 3)"></td>
+            <td id="row_12345_pt4" contenteditable="true" oninput="checkMaxScore('pt', 'row_12345', 4)"></td>
+            <td id="row_12345_pt5" contenteditable="true" oninput="checkMaxScore('pt', 'row_12345', 5)"></td>
+            <td id="row_12345_pt6" contenteditable="true" oninput="checkMaxScore('pt', 'row_12345', 6)"></td>
+            <td id="row_12345_pt7" contenteditable="true" oninput="checkMaxScore('pt', 'row_12345', 7)"></td>
+            <td id="row_12345_pt8" contenteditable="true" oninput="checkMaxScore('pt', 'row_12345', 8)"></td>
+            <td id="row_12345_pt9" contenteditable="true" oninput="checkMaxScore('pt', 'row_12345', 9)"></td>
+            <td id="row_12345_pt10" contenteditable="true" oninput="checkMaxScore('pt', 'row_12345', 10)"></td>
+            <td id="row_12345_ptTotal"></td>
+            <td id="row_12345_ptPS"></td>
+            <td id="row_12345_ptWS"></td>
+
+            <!-- Examination -->
+            <td id="row_12345_ex1" contenteditable="true" oninput="checkMaxScore('ex', 'row_12345', 1)"></td>
+            <td id="row_12345_ex2" contenteditable="true" oninput="checkMaxScore('ex', 'row_12345', 2)"></td>
+            <td id="row_12345_exTotal"></td>
+            <td id="row_12345_exPS"></td>
+            <td id="row_12345_exWS"></td>
+        </tr>
+
+
+        
+    </tbody>
+</table>
+
+<script>
+
+
+
+    // Function to update section totals (Attendance, Written Work, Performance Tasks, Examination)
+function updateScores(section) {
+    let total = 0;
+
+    // Loop through all the input fields for the section
+    for (let i = 1; i <= 10; i++) { // Adjust this based on the number of highest scores
+        let highestScore = parseFloat(document.getElementById(`${section}Highest${i}`).innerText) || 0;
+        total += highestScore;
+    }
+
+    // Update the total score for the section
+    document.getElementById(`${section}Total`).innerText = total.toFixed(2);
+}
+
+// Check if student score exceeds highest score
+function checkMaxScore(section, rowId, index) {
+    let highestScore = parseFloat(document.getElementById(`${section}Highest${index}`).innerText) || 0;
+    let studentScore = parseFloat(document.getElementById(`${rowId}_${section}${index}`).innerText) || 0;
+
+    // If the student score exceeds the highest score, set it to the highest
+    if (studentScore > highestScore) {
+        document.getElementById(`${rowId}_${section}${index}`).innerText = highestScore;
+    }
+
+    updateStudentTotal(section, rowId);
+}
+
+// Update total for a student (for all sections including the Examination)
+function updateStudentTotal(section, rowId) {
+    let total = 0;
+
+    // Loop through all the input fields for the section
+    for (let i = 1; i <= 10; i++) {
+        let studentScore = parseFloat(document.getElementById(`${rowId}_${section}${i}`).innerText) || 0;
+        total += studentScore;
+    }
+
+    // Update the total in the student's row
+    document.getElementById(`${rowId}_${section}Total`).innerText = total.toFixed(2);
+}
+
+// Function to update Examination scores (Midterm, Final, and Weighted Score)
+function updateExaminationScores() {
+    let total = 0;
+    let highest = 0;
+
+    // Loop through the inputs for the examination section (Midterm and Final)
+    for (let i = 1; i <= 2; i++) { // Midterm (1) and Final (2)
+        let scoreInput = document.getElementById(`exHighest${i}`);
+        if (scoreInput && scoreInput.innerText.trim()) {
+            let score = parseFloat(scoreInput.innerText.trim());
+            if (!isNaN(score)) {
+                total += score;
+                if (score > highest) {
+                    highest = score;
+                }
+            }
+        }
+    }
+
+    // Calculate the total and percentage for the exam
+    document.getElementById("exTotal").innerText = total.toFixed(2);
+    document.getElementById("exPS").innerText = highest.toFixed(2);
+    document.getElementById("exWS").innerText = (total * 0.30).toFixed(2);
+    
+    // Update the student's row total (for the examination)
+    updateStudentTotal('ex', 'row_12345');
+}
+
+// Add event listeners to update the examination scores dynamically
+document.querySelectorAll("#exHighest1, #exHighest2").forEach(input => {
+    input.addEventListener("input", updateExaminationScores);
+});
+
+// Add event listeners for Attendance, Written Work, and Performance Tasks to update totals
+document.querySelectorAll("[id^='attHighest']").forEach(input => {
+    input.addEventListener("input", function() {
+        updateScores('att');
+    });
+});
+
+document.querySelectorAll("[id^='wwHighest']").forEach(input => {
+    input.addEventListener("input", function() {
+        updateScores('ww');
+    });
+});
+
+document.querySelectorAll("[id^='ptHighest']").forEach(input => {
+    input.addEventListener("input", function() {
+        updateScores('pt');
+    });
+});
+
+// Add event listeners for each row to update totals for each student dynamically
+document.querySelectorAll("[id^='row_12345']").forEach(row => {
+    row.querySelectorAll("[id^='ex']").forEach(input => {
+        input.addEventListener("input", function () {
+            updateStudentTotal('ex', row.id); // Update student row total when any input changes
+        });
+    });
+});
+
+// Initialize the initial scores and totals
+function init() {
+    updateExaminationScores();
+    updateScores('att');
+    updateScores('ww');
+    updateScores('pt');
+}
+
+// Call init to set up the initial state
+init();
+
+</script>
+
+
+    
+
+</body>
+</html>

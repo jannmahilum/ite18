@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Field Sections</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body class="fourth-page">
+  <div class="container">
+    <div class="card">
+      <!-- Back Button -->
+      <button class="back-btn" onclick="window.history.back();">
+        <i class="fas fa-arrow-left"></i>
+      </button>
+      
+      <!-- Logo -->
+      <div class="logo-container3">
+        <img src="logo/1.png" alt="NSTP Logo" class="logo">
+      </div>
+      
+      <!-- Heading Section -->
+      <div class="section-heading">
+        <p>Field</p>
+        <h2 class="highlight">Loading...</h2> <!-- Field name will be updated here dynamically -->
+      </div>
+      
+      <!-- Scrollable Sections List -->
+      <div class="sections-container1">
+        <div class="section-item" onclick="location.href='section-records.html?section=Section%201'">
+          <p>SECTION 1</p>
+          <span>40 Students</span>
+        </div>
+        <div class="section-item" onclick="location.href='section-records.html?section=Section%202'">
+          <p>SECTION 2</p>
+          <span>40 Students</span>
+        </div>
+        <div class="section-item" onclick="location.href='section-records.html?section=Section%203'">
+          <p>SECTION 3</p>
+          <span>40 Students</span>
+        </div>
+        <div class="section-item" onclick="location.href='section-records.html?section=Section%204'">
+          <p>SECTION 4</p>
+          <span>40 Students</span>
+        </div>
+        <div class="section-item" onclick="location.href='section-records.html?section=Section%205'">
+          <p>SECTION 5</p>
+          <span>40 Students</span>
+        </div>
+        <div class="section-item" onclick="location.href='section-records.html?section=Section%206'">
+          <p>SECTION 6</p>
+          <span>40 Students</span>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="footer3">NSTP SERVICE RECORDS</div>
+    </div>
+  </div>
+
+  <script>
+    // Dynamically update the field name based on query parameters or localStorage
+    function getQueryParam(name) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name);
+    }
+
+    // Retrieve the field from query parameters or localStorage
+    const fieldFromQuery = getQueryParam('field');
+    const fieldFromStorage = localStorage.getItem('selectedField');
+    const field = fieldFromQuery || fieldFromStorage || 'Unknown';
+
+    // Update the heading with the field name
+    document.querySelector('.section-heading .highlight').textContent = field;
+  </script>
+</body>
+</html>
